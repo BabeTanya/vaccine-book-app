@@ -5,8 +5,10 @@ export default function Home() {
   return (
     <main>
       <Banner />
-      <div style={{margin: "20px"}}> 
-        <Card />
+      <div className="flex justify-around m-[20px]"> 
+        <Card hospitalName='Chulalongkorn Hospital' imageUrl='/image/chula.jpg'/>
+        <Card hospitalName='Rajavithi Hospital' imageUrl='/image/rajavithi.jpg'/>
+        <Card hospitalName='Thammasat University Hospital' imageUrl='/image/thammasat.jpg'/>
       </div>
     </main>
   )

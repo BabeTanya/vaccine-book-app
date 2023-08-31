@@ -1,15 +1,20 @@
 import style from "@/components/Card/card.module.css"
 import Image from "next/image"
 
-export function Card () {
+interface Props {
+    hospitalName: string;
+    imageUrl: string;
+
+}
+
+export function Card ({ hospitalName, imageUrl }: Props) {
     return (
-        <div className={style.card}>
-            <div  className={style.cardImage}>
-                <Image src="/image/vaccine-covid-19.jpg" alt="bannerImage" fill objectFit="cover" priority/>
+        <div className="w-1/5 h-[300px] rounded-lg shadow-lg">
+            <div  className="w-full h-[70%] relative rounded-t-lg">
+                <Image src={imageUrl} alt="bannerImage" fill className="object-cover rounded-t-lg"/>
             </div>
-            <div className={style.cardText}> 
-                <h4>วัคซีน Covid-19</h4>
-                <p style={{fontSize: "12px"}}>วัคซีนป้องกันโควิด-19 จะช่วยกระตุ้นให้ร่างกายสร้างภูมิคุ้มกันต่อเชื้อไวรัสนี้ขึ้นมา </p>
+            <div className="w-full h-[30%] p-[10px]"> 
+                <h4>{hospitalName}</h4>
             </div>
         </div>
     );
