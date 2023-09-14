@@ -1,12 +1,23 @@
 import Image from "next/image";
 import { InteractiveCard } from "./InteractiveCard";
+import Rating from "@mui/material/Rating";
+import { useEffect, useState } from "react";
 
-interface Props {
+export function ProductCard({
+  hospitalName,
+  imageUrl,
+  hospitalMap,
+  onScoreChange,
+}: {
   hospitalName: string;
   imageUrl: string;
-}
-
-export function ProductCard({ hospitalName, imageUrl }: Props) {
+  hospitalMap: Map<string, number>;
+  onScoreChange: Function;
+}) {
+  const [score, setScore] = useState<number | undefined>(0);
+  useEffect(() => {
+    setScore(hospitalMap.get(hospitalName));
+  }, [hospitalMap]);
   return (
     <InteractiveCard>
       <div className="w-full h-[70%] relative rounded-t-lg">
@@ -17,9 +28,16 @@ export function ProductCard({ hospitalName, imageUrl }: Props) {
           className="object-cover rounded-t-lg"
         />
       </div>
-      <div className="w-full h-[30%] p-[10px]">
+      <div className="w-full h-[15%] p-[10px]">
         <h4>{hospitalName}</h4>
       </div>
+      <Rating
+        name="simple-controlled"
+        value={score}
+        onChange={(event: any, newValue: any) => {
+          onScoreChange(hospitalName, newValue);
+        }}
+      />
     </InteractiveCard>
   );
 }

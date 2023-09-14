@@ -1,9 +1,13 @@
 "use client";
+import { useState } from "react";
 import { MenuItem, Select, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export default function Booking() {
+  const [reserveDate, setReserveDate] = useState(null);
+  const [location, setLocation] = useState("BKK");
+
   return (
     <main className="w-[100%] flex flex-col items-center space-y-10 ">
       <div className="text-xl font-medium mt-10">
@@ -21,6 +25,8 @@ export default function Booking() {
           fullWidth
           name="location"
           id="location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
           className="h-[3.5em] w-[400px]"
         >
           <MenuItem value="BKK">Chulalongkorn Hospital</MenuItem>
@@ -29,7 +35,11 @@ export default function Booking() {
         </Select>
         <div className="mt-6">วันที่รับวัคซีน</div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker className="bg-white w-[400px]" />
+          <DatePicker
+            className="bg-white w-[400px]"
+            value={reserveDate}
+            onChange={(value) => setReserveDate(value)}
+          />
         </LocalizationProvider>
       </div>
       <button className="block rounded-md bg-sky-600 hover:bg-sky-800 px-3 py-2 text-white shadow-sm w-[400px]">
