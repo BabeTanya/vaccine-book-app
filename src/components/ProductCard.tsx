@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { InteractiveCard } from "./InteractiveCard";
 import Rating from "@mui/material/Rating";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 
 export function ProductCard({
   hospitalName,
@@ -34,7 +34,10 @@ export function ProductCard({
       <Rating
         name="simple-controlled"
         value={score}
-        onChange={(event: any, newValue: any) => {
+        onClick={(e) => { 
+          e.stopPropagation();
+        }}
+        onChange={(event: SyntheticEvent<Element, Event>, newValue: any) => {
           onScoreChange(hospitalName, newValue);
         }}
       />

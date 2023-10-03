@@ -2,6 +2,7 @@
 import { useState } from "react";
 import style from "@/components/banner.module.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Banner() {
   const cover = [
@@ -11,6 +12,7 @@ export default function Banner() {
     "/image/banner4.jpg",
   ];
   const [index, setIndex] = useState(0);
+  const router = useRouter();
   return (
     <div className={style.banner} onClick={() => setIndex(index + 1)}>
       <Image
@@ -28,6 +30,12 @@ export default function Banner() {
           สามารถจองโรงพยาบาลที่ท่านต้องการเข้ารับบริการฉีดวัคซีนด้านล่าง
         </h3>
       </div>
+      <button className="bg-white text-cyan-600 border border-cyan-600
+      font-semibold py-2 px-2 m-2 rounded z-30 absolute bottom-0 right-0
+      hover:bg-cyan-600 hover:text-white hover:border-transparent"
+      onClick={(e) => { e.stopPropagation(); router.push('/hospital')}}>
+        Select Your Hospital
+      </button>
     </div>
   );
 }

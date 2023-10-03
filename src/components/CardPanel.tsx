@@ -1,9 +1,26 @@
 "use client";
 import { useReducer } from "react";
 import { ProductCard } from "./ProductCard";
+import Link from "next/link";
 
 export function CardPanel() {
-
+  const mockHospitalRepo = [
+    {
+      hid: '001',
+      name: 'Chulalongkorn Hospital',
+      image: '/image/chula.jpg'
+    },
+    {
+      hid: '002',
+      name: 'Rajavithi Hospital',
+      image: '/image/rajavithi.jpg'
+    },
+    {
+      hid: '003',
+      name: 'Thammasat University Hospital',
+      image: '/image/thammasat.jpg'
+    }
+  ]
   const scoreReducer = (
     hospitalMap: Map<string, number>,
     action: { type: string; hospital: string; score: number }
@@ -31,49 +48,39 @@ export function CardPanel() {
   return (
     <div>
       <div className="flex justify-around m-[20px]">
-        <ProductCard
-          hospitalName="Chulalongkorn Hospital"
-          imageUrl="/image/chula.jpg"
-       
-          hospitalMap={hospitalMap}
-          onScoreChange={(hospital: string, score: number) => {
-            dispatchScoreHospital({ type: "rating", hospital, score });
-          }}
-        />
-        <ProductCard
-          hospitalName="Rajavithi Hospital"
-          imageUrl="/image/rajavithi.jpg"
-        
-          hospitalMap={hospitalMap}
-          onScoreChange={(hospital: string, score: number) => {
-            dispatchScoreHospital({ type: "rating", hospital, score });
-          }}
-        />
-        <ProductCard
-          hospitalName="Thammasat University Hospital"
-          imageUrl="/image/thammasat.jpg"
-          
-          hospitalMap={hospitalMap}
-          onScoreChange={(hospital: string, score: number) => {
-            dispatchScoreHospital({ type: "rating", hospital, score });
-          }}
-        />
+        {
+          mockHospitalRepo.map((hospitalItem) => (
+            <Link href={`/hospital/${hospitalItem.hid}`} className="w-1/5">
+              <ProductCard
+                hospitalName={hospitalItem.name}
+                imageUrl={hospitalItem.image}
+            
+                hospitalMap={hospitalMap}
+                onScoreChange={(hospital: string, score: number) => {
+                  dispatchScoreHospital({ type: "rating", hospital, score });
+                }}
+              />
+            </Link>
+          ))
+        }
       </div>
    
-      {Array.from(hospitalMap.keys()).map((hospital) => (
-        <div
-          key={hospital}
-          onClick={() =>
-            dispatchScoreHospital({
-              type: "remove",
-              hospital,
-              score: 0,
-            })
-          }
-        >
-          {hospital} {hospitalMap.get(hospital)}
-        </div>
-      ))}
+      <div className="text-center">
+        {Array.from(hospitalMap.keys()).map((hospital) => (
+          <div
+            key={hospital}
+            onClick={() =>
+              dispatchScoreHospital({
+                type: "remove",
+                hospital,
+                score: 0,
+              })
+            }
+          >
+            {hospital} {hospitalMap.get(hospital)}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
