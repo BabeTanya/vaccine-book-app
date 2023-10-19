@@ -11,12 +11,12 @@ export function ProductCard({
 }: {
   hospitalName: string;
   imageUrl: string;
-  hospitalMap: Map<string, number>;
-  onScoreChange: Function;
+  hospitalMap?: Map<string, number>;
+  onScoreChange?: Function;
 }) {
   const [score, setScore] = useState<number | undefined>(0);
   useEffect(() => {
-    setScore(hospitalMap.get(hospitalName));
+    setScore(hospitalMap?.get(hospitalName));
   }, [hospitalMap]);
   return (
     <InteractiveCard>
@@ -31,16 +31,18 @@ export function ProductCard({
       <div className="w-full h-[15%] p-[10px]">
         <h4>{hospitalName}</h4>
       </div>
-      <Rating
-        name="simple-controlled"
-        value={score}
-        onClick={(e) => { 
-          e.stopPropagation();
-        }}
-        onChange={(event: SyntheticEvent<Element, Event>, newValue: any) => {
-          onScoreChange(hospitalName, newValue);
-        }}
-      />
+      { onScoreChange ? 
+        <Rating
+          name="simple-controlled"
+          value={score}
+          onClick={(e) => { 
+            e.stopPropagation();
+          }}
+          onChange={(event: SyntheticEvent<Element, Event>, newValue: any) => {
+            onScoreChange(hospitalName, newValue);
+          }}
+        /> : ''
+      }
     </InteractiveCard>
   );
 }
