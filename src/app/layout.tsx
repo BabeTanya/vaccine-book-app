@@ -21,6 +21,7 @@ export default async function RootLayout({
 }) {
 
   const nextAuthSession = await getServerSession(authOptions)
+  
   return (
     <html lang="en">
       <body className={inter.className}>
